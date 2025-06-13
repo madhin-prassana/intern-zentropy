@@ -1,7 +1,9 @@
 from llama_parse import LlamaParse
+from dotenv import load_dotenv
 import os
 
-os.environ["LLAMA_CLOUD_API_KEY"] = "llx-ToO27gdk4wH5BULiOGdvY4IbsIznrkh1ejKSRcCnUyAsANNz"
+load_dotenv()
+api_key = os.getenv("LLAMA_CLOUD_API_KEY")
 parser = LlamaParse(result_type="markdown", verbose=True)
 pdf_path = "sample_data/apple_data.pdf"
 documents = parser.load_data(pdf_path)
