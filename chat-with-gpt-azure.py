@@ -18,14 +18,13 @@ client = ChatCompletionsClient(
 )
 
 model = "openai/gpt-4.1"
-
 system_prompt = "You are a helpful assistant that answers questions taking the provided document as context."
 
 def ask_question(question):
     messages = [
         SystemMessage(system_prompt),
         UserMessage(f"This is the document:\n{pdf_context[:12000]}"),
-        UserMessage(f"Now answer this question based on the above:\n{question}")
+        UserMessage(f"Answer questions based on the above:\n{question}")
     ]
     response = client.complete(
         messages=messages,
