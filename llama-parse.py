@@ -15,5 +15,5 @@ with open(output_file, "w", encoding="utf-8") as f:
 
 print(f"\nParsed content saved to {output_file}")
 
-#API via LlamaCloud, so far the best at parsing pdf data but online and can't be used for sensitive data.
+#API via LlamaCloud, so far the best at parsing pdf data but online, has a limit and can't be used for sensitive data.
 #Takes a few minutes for larger files, especially involving images.
