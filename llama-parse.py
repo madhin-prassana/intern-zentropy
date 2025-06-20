@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+
 api_key = os.getenv("LLAMA_CLOUD_API_KEY")
 parser = LlamaParse(result_type="markdown", verbose=True)
 pdf_path = "sample_data/apple_data.pdf"
