@@ -2,8 +2,41 @@ import React, { useState } from "react";
 import "./App.css";
 
 function App() {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [parserChoice, setParserChoice] = useState("1");
+  const [status, setStatus] = useState("");
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
+
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      setStatus("Please select a file.");
+      return;
+    }
+
+    setStatus("Parsing...");
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("parser", parserChoice);
+
+    try {
+      const res = await fetch("http://localhost:5001/upload", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setStatus("Parsed successfully. You can now chat.");
+      } else {
+        setStatus(data.error || "Error parsing file.");
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus("Upload failed.");
+    }
+  };
 
   const askQuestion = async () => {
     const res = await fetch("http://localhost:5001/ask", {
@@ -18,7 +51,29 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Chat with PDF</h1>
+      <h1>Zentropy PDF Chatbot</h1>
+
+      <input
+        type="file"
+        accept=".pdf"
+        onChange={(e) => setSelectedFile(e.target.files[0])}
+      />
+      <br /><br />
+      <label>Select parser:</label>
+      <select value={parserChoice} onChange={(e) => setParserChoice(e.target.value)}>
+        <option value="1">LlamaParse</option>
+        <option value="2">Marker</option>
+        <option value="3">Docling</option>
+        <option value="4">Markitdown</option>
+        <option value="5">Tesseract OCR</option>
+        <option value="6">Hybrid (OCR + PDFPlumber)</option>
+      </select>
+      <br /><br />
+      <button onClick={handleUpload}>Upload and Parse</button>
+      <p>{status}</p>
+
+      <hr />
+
       <textarea
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
