@@ -6,20 +6,17 @@ from azure.core.credentials import AzureKeyCredential
 
 load_dotenv(dotenv_path="/Users/madhinprassana/PycharmProjects/PDF_parsing/.env")
 
-# Global document context
 pdf_context = ""
 
 def load_parsed_pdf(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
         return f.read()
 
-# Setter function to update the context when new PDF is parsed
 def set_pdf_context(file_path):
     global pdf_context
     pdf_context = load_parsed_pdf(file_path)
     print(f"Context updated from: {file_path}")
 
-# Set initial default context
 default_path = "output_data/amalgamation(llama).md"
 if os.path.exists(default_path):
     set_pdf_context(default_path)
