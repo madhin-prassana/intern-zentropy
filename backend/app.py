@@ -34,7 +34,6 @@ def upload():
     file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
     file.save(file_path)
 
-    # Decide output file name based on parser
     parser_map = {
         "1": (LlamaParser(), "amalgamation(llama).md"),
         "2": (MarkerParser(), "amalgamation(marker).md"),
